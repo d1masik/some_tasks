@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <p>{{ post.theme }}</p>
+    <p>{{ post.data|linebreaks }}</p>
+    <p><img src="{{ post.photo.url }}" alt="photo"></p>
+
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit">Comment</button>
+        </form>
+
+    {% endif %}
+    <p>Comments:</p>
+    <div style="padding: 10px">
+        {% for comment in comments %}
+            {% if comment.post.id == post.id %}
+
+            <hr>
+            <p> user: {{ comment.user }}</p>
+            <p>comment: {{ comment.body }}</p>
+            <hr>
+             {% endif %}
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
